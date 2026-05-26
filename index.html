@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>GitMD — your notes, your repo, your rules</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="GitMD is an Android Markdown notes app that uses any Git repository as storage. Git, Google Drive, Dropbox, Box, or local — your notes never lock you in." />
+<meta property="og:title" content="GitMD" />
+<meta property="og:description" content="Markdown notes for Android, backed by Git, Drive, Dropbox, Box, or your filesystem." />
+<meta property="og:image" content="images/feature-graphic-1024x500.png" />
+<meta property="og:type" content="website" />
+<link rel="icon" type="image/png" href="images/playstore-icon-512.png" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<header class="hero">
+  <div class="container">
+    <img class="logo" src="images/playstore-icon-512.png" alt="GitMD app icon" />
+    <h1>GitMD</h1>
+    <p class="tagline">Your notes. Your repo. Your rules.</p>
+    <p class="lede">
+      A Markdown notes app for Android. Notes live as plain <code>.md</code> files in
+      <strong>your</strong> Git repository &mdash; or Google Drive, Dropbox, Box, or just your filesystem.
+      No vendor lock-in. No cloud you don&rsquo;t control.
+    </p>
+    <p class="cta">
+      <a class="btn primary" href="#download">Get the app</a>
+      <a class="btn ghost" href="https://github.com/ymatsuza1128/github-markdown">View on GitHub</a>
+    </p>
+    <p class="lang"><a href="#ja">日本語</a></p>
+  </div>
+</header>
+
+<section class="features">
+  <div class="container">
+    <h2>Why GitMD</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Plain Markdown, always</h3>
+        <p>Your notes are <code>.md</code> files on disk. Open them with any editor, any time, on any device. No proprietary format. No export step.</p>
+      </div>
+      <div class="card">
+        <h3>Git is a first-class backend</h3>
+        <p>Clone any GitHub, GitLab, Codeberg, Bitbucket, Gitea, or self-hosted repo. Commit, push, pull. Full version history because that&rsquo;s just how Git works.</p>
+      </div>
+      <div class="card">
+        <h3>Storage you already trust</h3>
+        <p>Don&rsquo;t want Git? Pick Google Drive, Dropbox, Box, or local-only. Same notes, your choice of sync.</p>
+      </div>
+      <div class="card">
+        <h3>Wiki links &amp; backlinks</h3>
+        <p><code>[[Page]]</code> links work natively. Tap to navigate. Missing pages get auto-created. Backlinks panel shows what references the current note.</p>
+      </div>
+      <div class="card">
+        <h3>AI when you want it</h3>
+        <p>Bring your own key for Gemini, OpenAI, or Anthropic. Stay 100% offline if you don&rsquo;t. Your key is encrypted on-device.</p>
+      </div>
+      <div class="card">
+        <h3>Journal mode</h3>
+        <p>One tap opens <code>journal/YYYY-MM-DD.md</code>. Append from any app via the Android share sheet. Daily notes without ceremony.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="screenshots">
+  <div class="container">
+    <h2>What it looks like</h2>
+    <div class="gallery">
+      <img src="images/screenshot1.png" alt="Notes list screen" />
+      <img src="images/screenshot2.png" alt="Editor screen" />
+      <img src="images/screenshot3.png" alt="Preview with wiki links" />
+      <img src="images/screenshot4.png" alt="Settings" />
+    </div>
+  </div>
+</section>
+
+<section class="backends">
+  <div class="container">
+    <h2>Storage backends</h2>
+    <ul class="checklist">
+      <li><span class="ok">&#x2714;</span> <strong>Git</strong> &mdash; GitHub OAuth, GitLab OAuth, Personal Access Token, SSH key. Codeberg / Bitbucket / Gitea / self-hosted Forgejo all confirmed working.</li>
+      <li><span class="ok">&#x2714;</span> <strong>Local filesystem</strong> &mdash; SAF-backed folder on your device, no cloud at all.</li>
+      <li><span class="ok">&#x2714;</span> <strong>Google Drive</strong> &mdash; OAuth + Drive Picker for folder selection.</li>
+      <li><span class="soon">&#x25CF;</span> <strong>Dropbox</strong> &mdash; planned (<a href="https://github.com/ymatsuza1128/github-markdown/issues/224">#224</a>).</li>
+      <li><span class="soon">&#x25CF;</span> <strong>Box</strong> &mdash; planned (<a href="https://github.com/ymatsuza1128/github-markdown/issues/225">#225</a>).</li>
+    </ul>
+  </div>
+</section>
+
+<section class="ai">
+  <div class="container">
+    <h2>AI providers (bring your own key)</h2>
+    <ul class="checklist">
+      <li><span class="ok">&#x2714;</span> <strong>Google Gemini</strong> &mdash; <code>gemini-2.5-flash</code></li>
+      <li><span class="ok">&#x2714;</span> <strong>OpenAI</strong> &mdash; <code>gpt-4o-mini</code></li>
+      <li><span class="ok">&#x2714;</span> <strong>Anthropic</strong> &mdash; <code>claude-haiku-4-5</code></li>
+    </ul>
+    <p class="note">Keys are stored with Android <code>EncryptedSharedPreferences</code> (Keystore-backed). Disable AI entirely if you prefer &mdash; the app works without any provider configured.</p>
+  </div>
+</section>
+
+<section id="download" class="download">
+  <div class="container">
+    <h2>Download</h2>
+    <p>GitMD is in closed testing on Google Play. Email <a href="mailto:ymatsuza.tech@gmail.com?subject=GitMD%20closed%20test">ymatsuza.tech@gmail.com</a> to request tester access.</p>
+    <p>A desktop version (Linux / macOS / Windows) is in development.</p>
+  </div>
+</section>
+
+<section class="privacy">
+  <div class="container">
+    <h2>Privacy</h2>
+    <p>
+      Your notes never leave your storage backend (Git remote / Drive / device).
+      Tokens are encrypted on-device. Anonymous usage events are sent to Firebase Analytics
+      (no PII, no advertising ID). No accounts, no profile linking.
+    </p>
+    <p>
+      Full text: <a href="privacy-policy.html">Privacy Policy</a>.
+    </p>
+  </div>
+</section>
+
+<section id="ja" class="ja">
+  <div class="container">
+    <h2>日本語</h2>
+    <p><strong>GitMD</strong> は、Android 用の Markdown ノートアプリです。あなたのノートは <code>.md</code> ファイルとして、あなたが選んだ場所（Git リポジトリ、Google Drive、Dropbox、Box、または端末ローカル）に保存されます。</p>
+    <ul>
+      <li>専用フォーマットなし、エクスポート不要</li>
+      <li>Git バックエンドはフル履歴 + push/pull</li>
+      <li>WikiLink / バックリンク / Journal モード対応</li>
+      <li>AI は持ち込みキー（Gemini / OpenAI / Anthropic）</li>
+      <li>クローズドベータ中。<a href="mailto:ymatsuza.tech@gmail.com?subject=GitMD%20テスター希望">テスター応募</a></li>
+    </ul>
+    <p><a href="https://github.com/ymatsuza1128/github-markdown">GitHub リポジトリ</a> / <a href="privacy-policy.html">プライバシーポリシー</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Yuta Matsuzaki. GitMD is closed-source software; this page is part of the public landing.</p>
+    <p>
+      <a href="https://github.com/ymatsuza1128/github-markdown">GitHub</a> &middot;
+      <a href="privacy-policy.html">Privacy</a> &middot;
+      <a href="faq.html">FAQ</a> &middot;
+      <a href="mailto:ymatsuza.tech@gmail.com">Contact</a>
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
