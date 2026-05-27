@@ -198,6 +198,35 @@ section h2 {
   font-size: 0.95rem;
 }
 
+/* ---------- Legal / policy pages ---------- */
+.legal table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0 28px;
+  font-size: 0.95rem;
+}
+.legal th,
+.legal td {
+  border: 1px solid var(--card-border);
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+.legal th {
+  background: var(--card-bg);
+  font-weight: 600;
+}
+.legal h2 {
+  font-size: 1.35rem;
+  margin: 40px 0 12px;
+}
+.legal h2:first-child { margin-top: 0; }
+.legal ul { padding-left: 1.3em; margin: 12px 0; }
+.legal li { margin: 4px 0; color: var(--fg); }
+.legal p { margin: 12px 0; }
+.hero.legal-hero { padding: 56px 0 40px; }
+.hero.legal-hero h1 { font-size: 2.2rem; }
+
 /* ---------- Footer ---------- */
 footer {
   padding: 32px 0 40px;
