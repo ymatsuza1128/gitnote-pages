@@ -13,6 +13,7 @@ import { unlockPending } from './achievements.js';
 import { pickHeadline } from './news.js';
 import { rollGolden, applyGolden, goldenIntervalMs } from './golden.js';
 import { canWatchAd, applyAdReward } from './ads.js';
+import * as admob from './admob.js';
 import { byId as strainById } from './strains.js';
 import { short } from './format.js';
 
@@ -147,13 +148,19 @@ ui.init({
   },
   onWatchAd: () => {
     if (!canWatchAd(state, now())) return;
-    ui.playRewardedAd(() => {
+    const grant = () => {
       state = applyAdReward(state, now());
       audio.playGolden();
       ui.showToast('📺 ブースト獲得！ 生産 ×3（90秒）');
       ui.render(state, now());
       persist();
-    });
+    };
+    if (admob.isNative()) {
+      // Real AdMob rewarded ad on Android; reward only fires on completion.
+      admob.showRewarded(grant, () => ui.showToast('広告を読み込めませんでした。少し後でお試しください'));
+    } else {
+      ui.playRewardedAd(grant); // web: dummy countdown
+    }
   },
   onReset: () => {
     if (confirm('進行をリセットしますか？この操作は元に戻せません。')) {
@@ -183,6 +190,9 @@ function startLoop() {
   if (!stopLoop) stopLoop = start(loopDeps);
 }
 startLoop();
+
+// Initialize AdMob (banner + SDK) on native; no-op on the web build.
+admob.initAds();
 
 function applyAchievements() {
   const { state: next, unlocked } = unlockPending(state);
