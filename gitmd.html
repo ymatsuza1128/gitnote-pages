@@ -376,5 +376,79 @@
   })();
 </script>
 
+<script>
+  // Screenshot lightbox: click a gallery image to view it enlarged.
+  (function () {
+    var enhanced = false;
+    Array.prototype.forEach.call(document.querySelectorAll('.gallery'), function (g) {
+      if (g.querySelector('img')) { g.classList.add('lightbox-on'); enhanced = true; }
+    });
+    if (!enhanced) { return; }
+
+    var box = document.createElement('div');
+    box.className = 'lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.innerHTML =
+      '<button type="button" class="lightbox-btn lightbox-prev" aria-label="前へ / Previous">‹</button>' +
+      '<img alt="" />' +
+      '<button type="button" class="lightbox-btn lightbox-next" aria-label="次へ / Next">›</button>' +
+      '<button type="button" class="lightbox-btn lightbox-close" aria-label="閉じる / Close">×</button>' +
+      '<div class="lightbox-caption"></div>';
+    document.body.appendChild(box);
+
+    var bigImg = box.querySelector('img');
+    var caption = box.querySelector('.lightbox-caption');
+    var prevBtn = box.querySelector('.lightbox-prev');
+    var nextBtn = box.querySelector('.lightbox-next');
+    var items = [];
+    var index = 0;
+    var lastFocus = null;
+
+    function render() {
+      var el = items[index];
+      bigImg.src = el.currentSrc || el.src;
+      bigImg.alt = el.alt || '';
+      caption.textContent = el.alt || '';
+      var multi = items.length > 1;
+      prevBtn.style.display = nextBtn.style.display = multi ? '' : 'none';
+    }
+    function step(delta) {
+      index = (index + delta + items.length) % items.length;
+      render();
+    }
+    function open(imgEl) {
+      items = Array.prototype.slice.call(imgEl.closest('.gallery').querySelectorAll('img'));
+      index = items.indexOf(imgEl);
+      lastFocus = imgEl;
+      render();
+      box.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      box.querySelector('.lightbox-close').focus();
+    }
+    function close() {
+      box.classList.remove('open');
+      document.body.style.overflow = '';
+      bigImg.removeAttribute('src');
+      if (lastFocus) { lastFocus.focus(); }
+    }
+
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (t && t.matches && t.matches('.gallery.lightbox-on img')) { open(t); }
+    });
+    box.querySelector('.lightbox-close').addEventListener('click', close);
+    prevBtn.addEventListener('click', function () { step(-1); });
+    nextBtn.addEventListener('click', function () { step(1); });
+    box.addEventListener('click', function (e) { if (e.target === box) { close(); } });
+    document.addEventListener('keydown', function (e) {
+      if (!box.classList.contains('open')) { return; }
+      if (e.key === 'Escape') { close(); }
+      else if (e.key === 'ArrowLeft') { step(-1); }
+      else if (e.key === 'ArrowRight') { step(1); }
+    });
+  })();
+</script>
+
 </body>
 </html>
