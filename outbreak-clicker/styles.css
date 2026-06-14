@@ -211,7 +211,7 @@ html, body {
   background: radial-gradient(circle at 50% 40%, rgba(60,8,8,0.96), rgba(5,5,7,0.98));
   display: flex; align-items: center; justify-content: center; padding: 24px;
 }
-.clear-card { text-align: center; max-width: 360px; }
+.clear-card { text-align: center; max-width: 360px; max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
 .clear-emoji { font-size: 56px; margin-bottom: 10px; }
 .clear-card h1 { font-size: 28px; color: var(--accent); margin-bottom: 10px; letter-spacing: 1px; }
 #clear-stats { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
@@ -232,7 +232,9 @@ html, body {
 .ach-ic { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
 .ach-name { font-size: 13px; font-weight: 700; }
 .ach-desc { font-size: 11px; color: var(--muted); }
-#ach-close { margin-top: 12px; padding: 10px; background: #26262a; border: 1px solid var(--line); border-radius: 10px; color: var(--text); font-size: 13px; cursor: pointer; }
+/* Close buttons stay reachable even when the card scrolls (sticky pins them to
+   the card's bottom; a no-op for overlays whose inner list scrolls instead). */
+#ach-close, #lab-close, #dnalab-close, #set-close { flex: 0 0 auto; position: sticky; bottom: 0; display: block; width: 100%; margin-top: 12px; padding: 10px; background: #26262a; border: 1px solid var(--line); border-radius: 10px; color: var(--text); font-size: 13px; cursor: pointer; }
 
 /* ---------- ADS ---------- */
 #ads { flex: 0 0 auto; padding: 2px 18px 4px; }
