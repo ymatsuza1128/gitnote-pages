@@ -14,6 +14,7 @@ import { pickHeadline } from './news.js';
 import { rollGolden, applyGolden, goldenIntervalMs } from './golden.js';
 import { canWatchAd, applyAdReward } from './ads.js';
 import * as admob from './admob.js';
+import * as fb from './firebase.js';
 import { byId as strainById } from './strains.js';
 import { short } from './format.js';
 
@@ -103,6 +104,7 @@ ui.init({
     const gain = eco.prestigeGain(state);
     if (confirm(`変異して進行をリセットし、変異株を +${gain} 獲得します（永続で生産が上がります）。株コレクションは維持（Lvはリセット）。よろしいですか？`)) {
       state = eco.applyPrestige(state);
+      fb.logEvent('prestige', { count: state.prestiges || 0 });
       audio.setMuted(!!(state.settings && state.settings.muted));
       audio.playClear();
       applyAchievements();
@@ -150,6 +152,7 @@ ui.init({
     if (!canWatchAd(state, now())) return;
     const grant = () => {
       state = applyAdReward(state, now());
+      fb.logEvent('rewarded_ad_complete');
       audio.playGolden();
       ui.showToast('📺 ブースト獲得！ 生産 ×3（90秒）');
       ui.render(state, now());
@@ -181,8 +184,8 @@ const loopDeps = {
   getState: () => state,
   setState: (s) => { state = s; },
   onTick: () => { applyAchievements(); ui.render(state, now()); },
-  onTierComplete: () => { ui.playZoom(); audio.playZoom(); },
-  onCleared: (s) => { ui.showClear(s); audio.playClear(); },
+  onTierComplete: () => { ui.playZoom(); audio.playZoom(); fb.logEvent('tier_zoom'); },
+  onCleared: (s) => { ui.showClear(s); audio.playClear(); fb.logEvent('game_cleared'); },
   now,
   raf: (cb) => requestAnimationFrame(cb),
 };
@@ -193,6 +196,11 @@ startLoop();
 
 // Initialize AdMob (banner + SDK) on native; no-op on the web build.
 admob.initAds();
+
+// Firebase: forward JS errors to Crashlytics + log a session-start event.
+// No-op on web / until Firebase is wired into the native project.
+fb.installErrorReporting();
+fb.logEvent('game_start', { tier: state.tierIndex || 0, prestiges: state.prestiges || 0 });
 
 function applyAchievements() {
   const { state: next, unlocked } = unlockPending(state);
