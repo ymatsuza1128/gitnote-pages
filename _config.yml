@@ -1,3 +1,9 @@
 title: GitMD
 description: Markdown notes for Android and desktop, backed by Git, Drive, Dropbox, Box, or your filesystem
 theme: minima
+
+# Internal planning docs (specs/plans). Not part of the public site, and they
+# contain literal Liquid examples (e.g. {% raw %}{% include %}{% endraw %}) that
+# would otherwise break the Jekyll build. Keep them in-repo but unpublished.
+exclude:
+  - docs
