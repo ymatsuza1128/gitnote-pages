@@ -186,8 +186,8 @@ A. 同期間隔を制御できます。
 
 ### Q. バグを見つけました。どこに報告すれば？
 
-A. メール（<ymatsuza.tech@gmail.com>）または[テスター向け Google グループ](https://groups.google.com/g/gitmd-testers)にお寄せください。
+A. [お問い合わせフォーム](https://docs.google.com/forms/d/e/1FAIpQLScYyQolwD-83-JUnu-p8sfYY5WzsHtNr0s3JX3aifVP8n3A3g/viewform)または[テスター向け Google グループ](https://groups.google.com/g/gitmd-testers)にお寄せください。
 
 ### Q. 機能リクエストはどこに？
 
-A. 同じくメールまたは Google グループで受け付けています。いただいた要望はロードマップ検討の参考にします。
+A. 同じくお問い合わせフォームまたは Google グループで受け付けています。いただいた要望はロードマップ検討の参考にします。
