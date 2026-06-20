@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ja" data-lang="ja">
+<head>
+<meta charset="utf-8" />
+<script async src="/assets/js/analytics.js"></script>
+<title>rcmd — CLI のための個人コマンド知識ベース</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="rcmd は、シェル履歴から良いコマンドをキュレーションし、{{プレースホルダー}}置換・タグ・全文検索で素早く呼び出せる CLI ツールです。ローカルのみの TOML ファイル一枚、依存は typer だけ。" />
+<meta property="og:title" content="rcmd" />
+<meta property="og:description" content="CLI のための個人コマンド知識ベース。{{プレースホルダー}} 置換・タグ・全文検索。ローカル TOML、依存 1 つ。" />
+<meta property="og:image" content="https://ymatsuzatech.com/images/rcmd-icon.svg" />
+<meta property="og:url" content="https://ymatsuzatech.com/rcmd.html" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="rcmd" />
+<meta name="twitter:description" content="CLI のための個人コマンド知識ベース。{{プレースホルダー}} 置換・タグ・全文検索。ローカル TOML、依存 1 つ。" />
+<meta name="twitter:image" content="https://ymatsuzatech.com/images/rcmd-icon.svg" />
+<link rel="canonical" href="https://ymatsuzatech.com/rcmd.html" />
+<link rel="icon" type="image/svg+xml" href="images/rcmd-icon.svg" />
+<link rel="stylesheet" href="assets/styles.css" />
+<style>
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+  .code-block pre {
+    margin: 0;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--fg);
+    white-space: pre;
+  }
+  .code-block .c { color: var(--muted); }
+  .code-block .cmd { color: var(--accent); }
+  .install-steps { display: grid; gap: 16px; }
+  .step-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+</style>
+<script>
+  (function () {
+    try {
+      var s = localStorage.getItem('gitmd-lang');
+      if (s === 'en' || s === 'ja') {
+        document.documentElement.setAttribute('data-lang', s);
+        document.documentElement.setAttribute('lang', s);
+      }
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+
+<nav class="lang-switch" aria-label="Language / 言語">
+  <button type="button" data-lang="ja">日本語</button>
+  <button type="button" data-lang="en">English</button>
+</nav>
+
+<!-- ===================== 日本語 ===================== -->
+<div class="lang-content" lang="ja">
+
+<header class="hero">
+  <div class="container">
+    <img class="logo" src="images/rcmd-icon.svg" alt="rcmd アイコン" />
+    <h1>rcmd</h1>
+    <p class="tagline">CLI のための個人コマンド知識ベース</p>
+    <p class="platforms" aria-label="対応プラットフォーム">
+      <span>Windows</span><span>macOS</span><span>Linux</span>
+    </p>
+    <p class="lede">
+      シェル履歴から「残す価値のあるコマンド」だけをキュレーション。
+      <code>{{プレースホルダー}}</code> 置換・タグ・全文検索で素早く呼び出し、そのまま実行。
+      ストレージはローカルの TOML ファイル一枚。依存は <code>typer</code> だけ。
+    </p>
+    <p class="cta">
+      <a class="btn primary" href="https://github.com/ymatsuza/rcmd" target="_blank" rel="noopener">GitHub で見る</a>
+      <a class="btn ghost" href="#install-ja">インストール</a>
+    </p>
+  </div>
+</header>
+
+<section class="features">
+  <div class="container">
+    <h2>rcmd を選ぶ理由</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>履歴の「検索」ではなく「キュレーション」</h3>
+        <p><code>atuin</code>・<code>fzf</code>・<code>hstr</code> はライブ履歴を検索するツール。rcmd は「また使いたいコマンド」だけを手元に残すためのツールです。ノイズのない自分専用コマンド集を育てられます。</p>
+      </div>
+      <div class="card">
+        <h3><code>{{プレースホルダー}}</code> 置換</h3>
+        <p>コマンドに <code>{{image}}</code> や <code>{{path}}</code> を埋め込んでおき、呼び出し時に <code>--set image=alpine</code> で差し込み。汎用テンプレートとして繰り返し再利用できます。</p>
+      </div>
+      <div class="card">
+        <h3>タグ &amp; 全文検索</h3>
+        <p><code>-t docker -t dev</code> でタグ付け、<code>rcmd search docker</code> で絞り込み。出力は 1 行ずつなので fzf との組み合わせも自然です。</p>
+      </div>
+      <div class="card">
+        <h3>ローカル TOML、dotfiles で同期</h3>
+        <p>ストレージは <code>~/.config/rcmd/store.toml</code>（または <code>%APPDATA%\rcmd\store.toml</code>）の TOML ファイル 1 枚。手で編集でき、dotfiles リポジトリに入れるだけで複数マシンへ展開できます。</p>
+      </div>
+      <div class="card">
+        <h3>シェル履歴から一括インポート</h3>
+        <p><code>rcmd history --unique --reverse | fzf | rcmd save -d "説明"</code> のパイプ一発で、既存の履歴から選んで登録。まっさらなところからでもすぐ始められます。</p>
+      </div>
+      <div class="card">
+        <h3>依存 1 つ、すぐ動く</h3>
+        <p>依存は <code>typer</code> のみ。<code>uv sync &amp;&amp; uv run rcmd --help</code> で即起動。Python の煩雑な環境構築なし。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install-ja" class="download">
+  <div class="container">
+    <h2>インストール</h2>
+    <div class="install-steps">
+      <div>
+        <p class="step-label">1. リポジトリをクローン</p>
+        <div class="code-block"><pre><span class="cmd">git clone https://github.com/ymatsuza/rcmd.git &amp;&amp; cd rcmd</span></pre></div>
+      </div>
+      <div>
+        <p class="step-label">2. 依存を解決して起動（uv 推奨）</p>
+        <div class="code-block"><pre><span class="cmd">uv sync
+uv run rcmd --help</span></pre></div>
+      </div>
+    </div>
+    <p class="note"><code>uv</code> が入っていない場合は <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">astral.sh/uv</a> を参照してください。</p>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2>使い方</h2>
+
+    <h3 style="margin-top:0">コマンドを保存する</h3>
+    <div class="code-block"><pre><span class="c"># プレースホルダー付きで保存</span>
+<span class="cmd">rcmd save "docker run --rm -it -v {{path}}:/work {{image}} bash" \
+    -d "カレントディレクトリをマウントしてインタラクティブシェル" \
+    -t docker -t dev</span>
+
+<span class="c"># シェル履歴から fzf で選んで保存</span>
+<span class="cmd">rcmd history --unique --reverse | fzf | rcmd save -d "説明を書く" -t imported</span></pre></div>
+
+    <h3>検索・一覧</h3>
+    <div class="code-block"><pre><span class="c"># キーワード検索（fzf と組み合わせやすい 1 行出力）</span>
+<span class="cmd">rcmd search docker</span>
+
+<span class="c"># タグで絞り込み</span>
+<span class="cmd">rcmd list -t git</span>
+
+<span class="c"># 詳細表示（man ページ風）</span>
+<span class="cmd">rcmd show k3f9</span></pre></div>
+
+    <h3>呼び出し・実行</h3>
+    <div class="code-block"><pre><span class="c"># 標準出力に展開（$(rcmd get ...) や clip で活用）</span>
+<span class="cmd">rcmd get k3f9 --set path=$PWD --set image=alpine</span>
+<span class="cmd">rcmd get k3f9 --set path=. --set image=alpine | clip      </span><span class="c"># Windows</span>
+<span class="cmd">rcmd get k3f9 --set path=. --set image=alpine | pbcopy    </span><span class="c"># macOS</span>
+
+<span class="c"># そのまま実行（--dry-run でプレビュー）</span>
+<span class="cmd">rcmd run k3f9 --set path=. --set image=alpine
+rcmd run k3f9 --set path=. --set image=alpine --dry-run</span></pre></div>
+
+    <h3>編集・削除</h3>
+    <div class="code-block"><pre><span class="cmd">rcmd edit k3f9 -d "新しい説明" -t docker
+rcmd rm k3f9</span></pre></div>
+  </div>
+</section>
+
+<section class="backends">
+  <div class="container">
+    <h2>ストア場所</h2>
+    <ul class="checklist">
+      <li><span class="ok">&#x2714;</span> <strong>環境変数で上書き</strong> &mdash; <code>$RCMD_STORE</code> に任意のパスを指定</li>
+      <li><span class="ok">&#x2714;</span> <strong>macOS / Linux</strong> &mdash; <code>~/.config/rcmd/store.toml</code>（XDG 準拠）</li>
+      <li><span class="ok">&#x2714;</span> <strong>Windows</strong> &mdash; <code>%APPDATA%\rcmd\store.toml</code></li>
+    </ul>
+    <p>プレーンな TOML なのでテキストエディタで手編集可能。dotfiles リポジトリに入れて複数マシン間で同期できます。</p>
+  </div>
+</section>
+
+<section class="donate">
+  <div class="container">
+    <h2>開発を支援する</h2>
+    <p>rcmd は個人開発の OSS ツールです。役に立てたらサポートをいただけると励みになります。</p>
+    <p style="margin-top:20px;">
+      <a class="btn primary" href="https://github.com/sponsors/ymatsuza1128">GitHub Sponsors</a>
+      <a class="btn ghost" href="https://paypal.me/ymatsuza">PayPal</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Yuta Matsuzaki. rcmd は OSS（ライセンスはリポジトリを参照）。本ページは ymatsuzatech.com の公開ランディングの一部です。</p>
+    <p>
+      <a href="profile.html">自己紹介</a> &middot;
+      <a href="privacy-policy.html">プライバシー</a> &middot;
+      <a href="faq.html">FAQ</a> &middot;
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScYyQolwD-83-JUnu-p8sfYY5WzsHtNr0s3JX3aifVP8n3A3g/viewform" target="_blank" rel="noopener">お問い合わせ</a>
+    </p>
+  </div>
+</footer>
+
+</div>
+<!-- =================== /日本語 =================== -->
+
+<!-- ===================== English ===================== -->
+<div class="lang-content" lang="en">
+
+<header class="hero">
+  <div class="container">
+    <img class="logo" src="images/rcmd-icon.svg" alt="rcmd icon" />
+    <h1>rcmd</h1>
+    <p class="tagline">A personal command knowledge base for the CLI</p>
+    <p class="platforms" aria-label="Supported platforms">
+      <span>Windows</span><span>macOS</span><span>Linux</span>
+    </p>
+    <p class="lede">
+      Curate the commands worth keeping from your shell history.
+      Recall them instantly with <code>{{placeholder}}</code> substitution, tags, and full-text search &mdash; or run them directly.
+      Storage is a single local TOML file. One dependency: <code>typer</code>.
+    </p>
+    <p class="cta">
+      <a class="btn primary" href="https://github.com/ymatsuza/rcmd" target="_blank" rel="noopener">View on GitHub</a>
+      <a class="btn ghost" href="#install-en">Install</a>
+    </p>
+  </div>
+</header>
+
+<section class="features">
+  <div class="container">
+    <h2>Why rcmd</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>Curation, not just search</h3>
+        <p><code>atuin</code>, <code>fzf</code>, and <code>hstr</code> search your live history. rcmd curates the commands worth keeping. Build a personal reference you&rsquo;ll actually reuse, without the noise of ten thousand transient invocations.</p>
+      </div>
+      <div class="card">
+        <h3><code>{{placeholder}}</code> substitution</h3>
+        <p>Embed <code>{{image}}</code> or <code>{{path}}</code> in a saved command, then fill them at recall time with <code>--set image=alpine</code>. Turn any one-off command into a reusable template.</p>
+      </div>
+      <div class="card">
+        <h3>Tags &amp; full-text search</h3>
+        <p>Tag with <code>-t docker -t dev</code>, then narrow with <code>rcmd search docker</code>. One-line output keeps it fzf-friendly.</p>
+      </div>
+      <div class="card">
+        <h3>Local TOML, sync via dotfiles</h3>
+        <p>The store lives at <code>~/.config/rcmd/store.toml</code> (or <code>%APPDATA%\rcmd\store.toml</code> on Windows). Plain TOML &mdash; hand-edit it, commit it to your dotfiles repo, and you&rsquo;re synced across machines.</p>
+      </div>
+      <div class="card">
+        <h3>Import from shell history</h3>
+        <p><code>rcmd history --unique --reverse | fzf | rcmd save -d "desc"</code> &mdash; pipe your existing history through fzf and save the good ones in one shot.</p>
+      </div>
+      <div class="card">
+        <h3>One dependency, runs immediately</h3>
+        <p>Just <code>typer</code>. <code>uv sync &amp;&amp; uv run rcmd --help</code> and you&rsquo;re done. No environment wrangling.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="install-en" class="download">
+  <div class="container">
+    <h2>Install</h2>
+    <div class="install-steps">
+      <div>
+        <p class="step-label">1. Clone the repo</p>
+        <div class="code-block"><pre><span class="cmd">git clone https://github.com/ymatsuza/rcmd.git &amp;&amp; cd rcmd</span></pre></div>
+      </div>
+      <div>
+        <p class="step-label">2. Install deps and run (uv recommended)</p>
+        <div class="code-block"><pre><span class="cmd">uv sync
+uv run rcmd --help</span></pre></div>
+      </div>
+    </div>
+    <p class="note">Don&rsquo;t have <code>uv</code> yet? See <a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">astral.sh/uv</a>.</p>
+  </div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2>Usage</h2>
+
+    <h3 style="margin-top:0">Save a command</h3>
+    <div class="code-block"><pre><span class="c"># Save with placeholders</span>
+<span class="cmd">rcmd save "docker run --rm -it -v {{path}}:/work {{image}} bash" \
+    -d "mount cwd, interactive shell" \
+    -t docker -t dev</span>
+
+<span class="c"># Import from shell history via fzf</span>
+<span class="cmd">rcmd history --unique --reverse | fzf | rcmd save -d "describe me" -t imported</span></pre></div>
+
+    <h3>Search &amp; list</h3>
+    <div class="code-block"><pre><span class="c"># Keyword search (one-line output, fzf-friendly)</span>
+<span class="cmd">rcmd search docker</span>
+
+<span class="c"># Filter by tag</span>
+<span class="cmd">rcmd list -t git</span>
+
+<span class="c"># Inspect one entry (man-page view)</span>
+<span class="cmd">rcmd show k3f9</span></pre></div>
+
+    <h3>Recall &amp; run</h3>
+    <div class="code-block"><pre><span class="c"># Print to stdout (use with $() or a clipboard tool)</span>
+<span class="cmd">rcmd get k3f9 --set path=$PWD --set image=alpine</span>
+<span class="cmd">rcmd get k3f9 --set path=. --set image=alpine | clip      </span><span class="c"># Windows</span>
+<span class="cmd">rcmd get k3f9 --set path=. --set image=alpine | pbcopy    </span><span class="c"># macOS</span>
+
+<span class="c"># Run it directly (--dry-run to preview first)</span>
+<span class="cmd">rcmd run k3f9 --set path=. --set image=alpine
+rcmd run k3f9 --set path=. --set image=alpine --dry-run</span></pre></div>
+
+    <h3>Edit &amp; remove</h3>
+    <div class="code-block"><pre><span class="cmd">rcmd edit k3f9 -d "new description" -t docker
+rcmd rm k3f9</span></pre></div>
+  </div>
+</section>
+
+<section class="backends">
+  <div class="container">
+    <h2>Store location</h2>
+    <ul class="checklist">
+      <li><span class="ok">&#x2714;</span> <strong>Override via env var</strong> &mdash; set <code>$RCMD_STORE</code> to any path</li>
+      <li><span class="ok">&#x2714;</span> <strong>macOS / Linux</strong> &mdash; <code>~/.config/rcmd/store.toml</code> (XDG)</li>
+      <li><span class="ok">&#x2714;</span> <strong>Windows</strong> &mdash; <code>%APPDATA%\rcmd\store.toml</code></li>
+    </ul>
+    <p>Plain TOML &mdash; hand-edit it or commit it to your dotfiles to sync across machines.</p>
+  </div>
+</section>
+
+<section class="donate">
+  <div class="container">
+    <h2>Support development</h2>
+    <p>rcmd is a free, open-source tool built in personal time. Sponsorships are greatly appreciated.</p>
+    <p style="margin-top:20px;">
+      <a class="btn primary" href="https://github.com/sponsors/ymatsuza1128">GitHub Sponsors</a>
+      <a class="btn ghost" href="https://paypal.me/ymatsuza">PayPal</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>&copy; 2026 Yuta Matsuzaki. rcmd is open source; see the repository for license details. This page is part of the ymatsuzatech.com public landing.</p>
+    <p>
+      <a href="profile.html">About</a> &middot;
+      <a href="privacy-policy.html">Privacy</a> &middot;
+      <a href="faq.html">FAQ</a> &middot;
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLScYyQolwD-83-JUnu-p8sfYY5WzsHtNr0s3JX3aifVP8n3A3g/viewform" target="_blank" rel="noopener">Contact</a>
+    </p>
+  </div>
+</footer>
+
+</div>
+<!-- =================== /English =================== -->
+
+<script>
+  (function () {
+    var html = document.documentElement;
+    var btns = Array.prototype.slice.call(document.querySelectorAll('.lang-switch button'));
+    function syncButtons(l) {
+      btns.forEach(function (b) {
+        var on = b.getAttribute('data-lang') === l;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    }
+    function setLang(l) {
+      html.setAttribute('data-lang', l);
+      html.setAttribute('lang', l);
+      syncButtons(l);
+      try { localStorage.setItem('gitmd-lang', l); } catch (e) {}
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
+    });
+    syncButtons(html.getAttribute('data-lang') || 'ja');
+  })();
+</script>
+
+</body>
+</html>
