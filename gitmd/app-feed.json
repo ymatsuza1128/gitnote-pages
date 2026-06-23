@@ -1,0 +1,17 @@
+{
+  "announcements": [
+    {
+      "id": "google-drive-2026-06-23",
+      "title": {
+        "ja": "Google ドライブ対応",
+        "en": "Google Drive support"
+      },
+      "body": {
+        "ja": "Markdown ノートの保存先に Google ドライブが使えるようになりました。設定 → ストレージから追加できます。",
+        "en": "You can now store your Markdown notes in Google Drive. Add it from Settings → Storage."
+      },
+      "publishedAt": "2026-06-23"
+    }
+  ],
+  "releaseNotes": []
+}
