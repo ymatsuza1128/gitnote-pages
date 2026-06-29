@@ -1,7 +1,7 @@
 {
   "_comment": "GitMD app version-update gate. Fetched on launch; compared to BuildConfig.VERSION_CODE. minSupportedVersionCode>current → forced update, latestVersionCode>current → soft notice. min=0 disables forcing. 404/garbage fails open. Spec: ymatsuza1128/github-markdown docs/superpowers/specs/2026-06-13-version-update-gate-design.md",
   "minSupportedVersionCode": 0,
-  "latestVersionCode": 18,
+  "latestVersionCode": 25,
   "storeUrl": "https://play.google.com/store/apps/details?id=com.ymatsuza.gitmd",
   "messages": {
     "soft": {
