@@ -13,5 +13,15 @@
       "publishedAt": "2026-06-23"
     }
   ],
-  "releaseNotes": []
+  "releaseNotes": [
+    {
+      "versionCode": 25,
+      "versionName": "1.13.0",
+      "publishedAt": "2026-07-01",
+      "notes": {
+        "ja": "■ 新機能\n・ノート関連グラフビュー（疑似3D・Obsidian風）を追加\n・クラウドストレージ（Drive/Dropbox/Box）のリモート変更通知に対応\n・検索ヒットキーワードを編集タブでもハイライト表示\n\n■ バグ修正\n・グラフビュー起動時のラベル描画クラッシュを修正\n・大画面起動時の黒画面（設定ロード中）を修正\n・戻るボタン連打でバックスタックが空になる不具合を修正\n・エディタ読み込み直後の自動スクロールを修正\n・通知グループのサマリータップに対応",
+        "en": "■ New Features\n- Added a note relationship graph view (pseudo-3D, Obsidian-style)\n- Remote change notifications for cloud storage (Drive/Dropbox/Box)\n- Search-hit keywords now highlighted in the editor tab too\n\n■ Bug Fixes\n- Fixed a label-rendering crash when opening the graph view\n- Fixed a black screen on large-screen launch (while settings load)\n- Fixed the back stack emptying on rapid Back taps\n- Fixed auto-scroll right after the editor loads\n- Support tapping the notification group summary"
+      }
+    }
+  ]
 }
